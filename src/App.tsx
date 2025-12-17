@@ -3,6 +3,7 @@ import './App.css'
 import logoImg from './assets/logo.png'
 import heroImg from './assets/FrontPage.jpeg'
 import arquiImg from './assets/ARQUI_1 - Page 1.png'
+import casosDeUsoImg from './assets/Casos de uso PryFinal - Página 1.png'
 
 // Declare Landbot on window for TypeScript
 declare global {
@@ -13,6 +14,7 @@ declare global {
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCasosModalOpen, setIsCasosModalOpen] = useState(false)
   const [activeFeature, setActiveFeature] = useState(0)
   const [, setLandbotLoaded] = useState(false)
   const [zoomLevel, setZoomLevel] = useState(1)
@@ -331,16 +333,27 @@ function App() {
               </div>
             </div>
 
-            {/* System Diagram Button */}
-            <button 
-              className="diagram-button"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-7l-4 5h8z"/>
-              </svg>
-              Ver Diagrama del Sistema
-            </button>
+            {/* System Diagram Buttons */}
+            <div className="diagram-buttons-container">
+              <button 
+                className="diagram-button"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-7l-4 5h8z"/>
+                </svg>
+                Arquitectura del Chatbot
+              </button>
+              <button 
+                className="diagram-button"
+                onClick={() => setIsCasosModalOpen(true)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l4.59-4.58L18 11l-6 6z"/>
+                </svg>
+                Casos de Uso
+              </button>
+            </div>
           </div>
         </div>
       </main>
@@ -365,7 +378,7 @@ function App() {
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
               </svg>
             </button>
-            <h3 className="modal-title">Diagrama del Sistema</h3>
+            <h3 className="modal-title">Arquitectura del chatbot</h3>
             <div className="zoom-controls">
               <button 
                 className="zoom-btn" 
@@ -413,6 +426,80 @@ function App() {
                 <img 
                   src={arquiImg} 
                   alt="Arquitectura del Sistema Farah" 
+                  className="architecture-image" 
+                  style={{ 
+                    transform: `scale(${zoomLevel}) translate(${position.x / zoomLevel}px, ${position.y / zoomLevel}px)`,
+                    transformOrigin: 'center center'
+                  }}
+                  draggable={false}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Casos de Uso Modal */}
+      {isCasosModalOpen && (
+        <div className="modal-overlay" onClick={() => { setIsCasosModalOpen(false); setZoomLevel(1); setPosition({ x: 0, y: 0 }); }}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="modal-close"
+              onClick={() => { setIsCasosModalOpen(false); setZoomLevel(1); setPosition({ x: 0, y: 0 }); }}
+              aria-label="Cerrar"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              </svg>
+            </button>
+            <h3 className="modal-title">Casos de Uso</h3>
+            <div className="zoom-controls">
+              <button 
+                className="zoom-btn" 
+                onClick={() => { setZoomLevel(z => Math.max(0.5, z - 0.25)); }}
+                disabled={zoomLevel <= 0.5}
+                title="Reducir zoom"
+              >
+                −
+              </button>
+              <span className="zoom-level">{Math.round(zoomLevel * 100)}%</span>
+              <button 
+                className="zoom-btn" 
+                onClick={() => { setZoomLevel(z => Math.min(4, z + 0.25)); }}
+                disabled={zoomLevel >= 4}
+                title="Aumentar zoom"
+              >
+                +
+              </button>
+              <button 
+                className="zoom-btn reset-btn" 
+                onClick={() => { setZoomLevel(1); setPosition({ x: 0, y: 0 }); }}
+                title="Restablecer zoom"
+              >
+                ↺
+              </button>
+            </div>
+            <div className="modal-content">
+              <div 
+                className="diagram-container"
+                onMouseDown={(e) => {
+                  if (zoomLevel > 1) {
+                    setIsDragging(true);
+                    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+                  }
+                }}
+                onMouseMove={(e) => {
+                  if (isDragging && zoomLevel > 1) {
+                    setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+                  }
+                }}
+                onMouseUp={() => setIsDragging(false)}
+                onMouseLeave={() => setIsDragging(false)}
+                style={{ cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
+              >
+                <img 
+                  src={casosDeUsoImg} 
+                  alt="Casos de Uso" 
                   className="architecture-image" 
                   style={{ 
                     transform: `scale(${zoomLevel}) translate(${position.x / zoomLevel}px, ${position.y / zoomLevel}px)`,

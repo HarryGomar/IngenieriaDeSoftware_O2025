@@ -691,6 +691,14 @@
   transform: translateX(4px);
 }
 
+/* Diagram Buttons Container */
+.diagram-buttons-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* Diagram Button */
 .diagram-button {
   display: inline-flex;
