@@ -106,7 +106,7 @@ function App() {
       ),
       title: 'Lugares para Comer',
       shortTitle: 'Comida',
-      description: 'Descubre dónde comer cerca del ITAM. Elige una categoría (tacos, fonda, pasta o café) y recibe 3 recomendaciones a 500m del campus con información de Google Maps.',
+      description: 'Descubre dónde comer cerca del ITAM. Elige una categoría (tacos, fonda, pasta o café) y recibe 3 recomendaciones a 500m del campus. Utilizamos la API de Google Places para brindarte información actualizada.',
       details: [
         'Categorías: tacos, fonda, pasta, café',
         'Nombre, rating y dirección del lugar',
@@ -123,7 +123,7 @@ function App() {
       ),
       title: 'Nuestro Clima',
       shortTitle: 'Clima',
-      description: 'Consulta el clima actual en los campus del ITAM. Selecciona Río Hondo o Santa Teresa y obtén información en tiempo real de OpenWeather.',
+      description: 'Consulta el clima actual en los campus del ITAM. Selecciona Río Hondo o Santa Teresa y obtén información en tiempo real. Utilizamos la API de OpenWeather para datos meteorológicos precisos.',
       details: [
         'Campus Río Hondo y Santa Teresa',
         'Descripción del clima actual',
@@ -268,10 +268,9 @@ function App() {
       <main className="main-content">
         <div className="container">
           <div className="intro-section">
-            <h2 className="section-title">Comunidad ITAM</h2>
             <p className="intro-text">
-              Bienvenido a tu asistente virtual Farah. Estoy aquí para ayudarte con todas 
-              tus dudas sobre el primer semestre, trámites, horarios y vida universitaria.
+               Farah es el asistente virtual diseñado para facilitar la vida universitaria de los estudiantes del ITAM. 
+               Proporciona acceso rápido a información sobre ubicaciones en el campus, opciones de comida cercanas, clima en tiempo real, gestión de horarios, consulta de calificaciones y trámites administrativos.
             </p>
           </div>
 
@@ -297,7 +296,7 @@ function App() {
 
             {/* Features Tabs Section */}
             <div className="features-section">
-              <h3 className="features-title">Explora nuestras herramientas</h3>
+              <h3 className="features-title">Servicios Disponibles</h3>
               <div className="features-tabs">
                 {features.map((feature) => (
                   <button
